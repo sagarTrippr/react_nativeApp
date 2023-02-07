@@ -56,7 +56,7 @@ const HomeScreen = ({ route, navigation }) => {
 
   return (
     <View>
-      <Text>hello and welcome to the APP</Text>
+      <Text>HELLO AND WELLCOME TO THE APP </Text>
     </View>
   )
 }
