@@ -1,5 +1,5 @@
 
-import { View, Text } from 'react-native'
+import { View, Text , Alert} from 'react-native'
 import React, { useEffect } from 'react'
 import * as Location from "expo-location"
 
@@ -12,7 +12,17 @@ const HomeScreen = ({ route, navigation }) => {
     const getPermission = async () => {
       const { granted } = await Location.getForegroundPermissionsAsync()
       if (!granted) {
-        console.log("location tracking denied")
+        Alert.alert('Alert Title', 'location tracking denied', [
+          {
+            text: 'Cancel',
+            onPress: () => console.log("location tracking denied"),
+            style: 'cancel',
+          },
+          {text: 'Grant', onPress: async () => {
+             await Location.requestForegroundPermissionsAsync()
+          }},
+        ]);
+        
         return
       }
       else {
@@ -22,6 +32,7 @@ const HomeScreen = ({ route, navigation }) => {
             timeInterval: 15000
           },
           async (location) => {
+            console.log(location)
            await fetch("https://native-backend.onrender.com/update", {
               method: "PUT",
               headers: {
